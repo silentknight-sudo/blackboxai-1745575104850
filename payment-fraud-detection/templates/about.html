@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block title %}The Team - La Casa de Fraud Detection{% endblock %}
+
+{% block content %}
+<!-- About Header -->
+<div class="mb-12 text-center">
+    <div class="mb-8 transform hover:scale-110 transition-transform duration-500">
+        <i class="fas fa-mask text-6xl text-red-600"></i>
+    </div>
+    <h1 class="text-5xl font-bold mb-4">The Team</h1>
+    <p class="text-xl text-gray-400">Behind the Most Secure Fraud Detection System</p>
+</div>
+
+<!-- Project Overview -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+    <div class="card p-8 rounded-lg">
+        <h2 class="text-3xl font-bold mb-4 text-red-600">
+            <i class="fas fa-shield-alt mr-2"></i>Our Mission
+        </h2>
+        <p class="text-gray-300 mb-4">
+            La Casa de Fraud Detection is dedicated to protecting financial transactions using cutting-edge 
+            machine learning technology. Our system processes millions of transactions in real-time, 
+            identifying and preventing fraudulent activities before they occur.
+        </p>
+        <p class="text-gray-300">
+            With our military-grade security protocols and advanced AI algorithms, we ensure that your 
+            transactions are safe and secure, 24/7.
+        </p>
+    </div>
+
+    <div class="card p-8 rounded-lg">
+        <h2 class="text-3xl font-bold mb-4 text-red-600">
+            <i class="fas fa-chart-line mr-2"></i>Project Stats
+        </h2>
+        <div class="grid grid-cols-2 gap-4">
+            <div class="text-center p-4 bg-gray-800 rounded">
+                <div class="text-3xl font-bold text-red-600 mb-2">1M+</div>
+                <div class="text-sm text-gray-400">Transactions Protected</div>
+            </div>
+            <div class="text-center p-4 bg-gray-800 rounded">
+                <div class="text-3xl font-bold text-red-600 mb-2">99.9%</div>
+                <div class="text-sm text-gray-400">Accuracy Rate</div>
+            </div>
+            <div class="text-center p-4 bg-gray-800 rounded">
+                <div class="text-3xl font-bold text-red-600 mb-2">0.001s</div>
+                <div class="text-sm text-gray-400">Response Time</div>
+            </div>
+            <div class="text-center p-4 bg-gray-800 rounded">
+                <div class="text-3xl font-bold text-red-600 mb-2">24/7</div>
+                <div class="text-sm text-gray-400">Monitoring</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Technology Stack -->
+<div class="card p-8 rounded-lg mb-12">
+    <h2 class="text-3xl font-bold mb-6 text-red-600">
+        <i class="fas fa-code mr-2"></i>Technology Stack
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Frontend -->
+        <div class="text-center">
+            <div class="text-4xl mb-4 text-red-600">
+                <i class="fas fa-laptop-code"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-4">Frontend</h3>
+            <ul class="space-y-2 text-gray-300">
+                <li>HTML5 & CSS3</li>
+                <li>Tailwind CSS</li>
+                <li>JavaScript</li>
+                <li>Chart.js</li>
+            </ul>
+        </div>
+
+        <!-- Backend -->
+        <div class="text-center">
+            <div class="text-4xl mb-4 text-red-600">
+                <i class="fas fa-server"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-4">Backend</h3>
+            <ul class="space-y-2 text-gray-300">
+                <li>Python</li>
+                <li>Flask</li>
+                <li>SQLite</li>
+                <li>RESTful APIs</li>
+            </ul>
+        </div>
+
+        <!-- ML Stack -->
+        <div class="text-center">
+            <div class="text-4xl mb-4 text-red-600">
+                <i class="fas fa-brain"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-4">ML Stack</h3>
+            <ul class="space-y-2 text-gray-300">
+                <li>Scikit-learn</li>
+                <li>Pandas</li>
+                <li>NumPy</li>
+                <li>XGBoost</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Features -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+    <div class="card p-6 rounded-lg text-center">
+        <div class="text-3xl text-red-600 mb-4">
+            <i class="fas fa-bolt"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-2">Real-time Detection</h3>
+        <p class="text-gray-400">Instant fraud detection for all transactions</p>
+    </div>
+
+    <div class="card p-6 rounded-lg text-center">
+        <div class="text-3xl text-red-600 mb-4">
+            <i class="fas fa-chart-bar"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-2">Advanced Analytics</h3>
+        <p class="text-gray-400">Comprehensive transaction analysis</p>
+    </div>
+
+    <div class="card p-6 rounded-lg text-center">
+        <div class="text-3xl text-red-600 mb-4">
+            <i class="fas fa-shield-alt"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-2">Secure System</h3>
+        <p class="text-gray-400">Military-grade security protocols</p>
+    </div>
+
+    <div class="card p-6 rounded-lg text-center">
+        <div class="text-3xl text-red-600 mb-4">
+            <i class="fas fa-clock"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-2">24/7 Monitoring</h3>
+        <p class="text-gray-400">Continuous transaction surveillance</p>
+    </div>
+</div>
+
+<!-- Contact Section -->
+<div class="card p-8 rounded-lg text-center">
+    <h2 class="text-3xl font-bold mb-4 text-red-600">
+        <i class="fas fa-envelope mr-2"></i>Get in Touch
+    </h2>
+    <p class="text-gray-300 mb-6">
+        Interested in implementing our fraud detection system? Contact us for more information.
+    </p>
+    <a href="mailto:contact@casadefraud.com" class="btn-primary px-8 py-3 rounded-lg inline-block font-bold text-lg">
+        Contact Us
+        <i class="fas fa-arrow-right ml-2"></i>
+    </a>
+</div>
+{% endblock %}
