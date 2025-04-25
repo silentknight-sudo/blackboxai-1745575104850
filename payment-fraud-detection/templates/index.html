@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}La Casa de Fraud Detection - Home{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="relative h-screen -mt-24 flex items-center justify-center">
+    <div class="absolute inset-0 bg-black opacity-60"></div>
+    <div class="relative z-10 text-center px-4">
+        <div class="mb-8 transform hover:scale-110 transition-transform duration-500">
+            <i class="fas fa-mask text-8xl text-red-600"></i>
+        </div>
+        <h1 class="text-5xl md:text-7xl font-bold mb-6 text-white">
+            Welcome to <span class="text-red-600">La Casa de Fraud</span>
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 text-gray-300">
+            Protecting Your Money with Military-Grade ML Technology
+        </p>
+        <div class="space-x-4">
+            <a href="/dashboard" class="btn-primary px-8 py-3 rounded-lg inline-block font-bold text-lg hover:bg-red-700">
+                Enter The Vault
+                <i class="fas fa-vault ml-2"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="py-16">
+    <h2 class="text-4xl font-bold text-center mb-12">Our Security Protocols</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Real-time Detection -->
+        <div class="card p-6 rounded-lg transform hover:scale-105 transition-transform duration-300">
+            <div class="text-red-600 text-4xl mb-4">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">The Vault Guard</h3>
+            <p class="text-gray-400">
+                Real-time transaction monitoring with advanced ML algorithms to detect fraudulent activities instantly.
+            </p>
+        </div>
+
+        <!-- ML Analysis -->
+        <div class="card p-6 rounded-lg transform hover:scale-105 transition-transform duration-300">
+            <div class="text-red-600 text-4xl mb-4">
+                <i class="fas fa-brain"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">The Professor's Analysis</h3>
+            <p class="text-gray-400">
+                Sophisticated machine learning models trained on extensive financial transaction data.
+            </p>
+        </div>
+
+        <!-- Security Dashboard -->
+        <div class="card p-6 rounded-lg transform hover:scale-105 transition-transform duration-300">
+            <div class="text-red-600 text-4xl mb-4">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">The Heist Monitor</h3>
+            <p class="text-gray-400">
+                Comprehensive dashboard for monitoring and analyzing transaction patterns.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Section -->
+<div class="py-16 bg-black bg-opacity-50 rounded-lg mt-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+        <div class="p-4">
+            <div class="text-4xl font-bold text-red-600 mb-2">99.9%</div>
+            <div class="text-gray-400">Accuracy Rate</div>
+        </div>
+        <div class="p-4">
+            <div class="text-4xl font-bold text-red-600 mb-2">0.001s</div>
+            <div class="text-gray-400">Response Time</div>
+        </div>
+        <div class="p-4">
+            <div class="text-4xl font-bold text-red-600 mb-2">1M+</div>
+            <div class="text-gray-400">Transactions Analyzed</div>
+        </div>
+        <div class="p-4">
+            <div class="text-4xl font-bold text-red-600 mb-2">24/7</div>
+            <div class="text-gray-400">Monitoring</div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="py-16 text-center">
+    <h2 class="text-3xl font-bold mb-6">Ready to Secure Your Transactions?</h2>
+    <a href="/dashboard" class="btn-primary px-8 py-3 rounded-lg inline-block font-bold text-lg">
+        Start Detection Now
+        <i class="fas fa-arrow-right ml-2"></i>
+    </a>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}
