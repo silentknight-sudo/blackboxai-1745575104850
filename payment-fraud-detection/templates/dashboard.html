@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+
+{% block title %}Control Room - La Casa de Fraud Detection{% endblock %}
+
+{% block content %}
+<!-- Dashboard Header -->
+<div class="mb-8">
+    <h1 class="text-4xl font-bold text-red-600 mb-4">The Control Room</h1>
+    <p class="text-gray-400">Monitor and analyze transactions in real-time</p>
+</div>
+
+<!-- Main Dashboard Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Transaction Form Card -->
+    <div class="card p-6 rounded-lg col-span-1">
+        <h2 class="text-2xl font-bold mb-4 text-red-600">
+            <i class="fas fa-money-bill-wave mr-2"></i>New Transaction
+        </h2>
+        <form id="transaction-form" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium mb-2">Amount ($)</label>
+                <input type="number" step="0.01" id="amount" required
+                    class="w-full p-2 rounded bg-gray-800 border border-red-600 text-white focus:outline-none focus:ring-2 focus:ring-red-600">
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-2">Card Number</label>
+                <input type="text" id="card_number" required pattern="[0-9]{16}"
+                    class="w-full p-2 rounded bg-gray-800 border border-red-600 text-white focus:outline-none focus:ring-2 focus:ring-red-600"
+                    placeholder="1234 5678 9012 3456">
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-2">Transaction Type</label>
+                <select id="type" required
+                    class="w-full p-2 rounded bg-gray-800 border border-red-600 text-white focus:outline-none focus:ring-2 focus:ring-red-600">
+                    <option value="online">Online Purchase</option>
+                    <option value="pos">Point of Sale</option>
+                    <option value="transfer">Bank Transfer</option>
+                </select>
+            </div>
+            <button type="submit" 
+                class="w-full btn-primary py-2 px-4 rounded-lg text-white font-bold hover:bg-red-700 transition-colors">
+                Analyze Transaction
+                <i class="fas fa-search ml-2"></i>
+            </button>
+        </form>
+    </div>
+
+    <!-- Real-time Analysis Card -->
+    <div class="card p-6 rounded-lg col-span-2">
+        <h2 class="text-2xl font-bold mb-4 text-red-600">
+            <i class="fas fa-chart-line mr-2"></i>Real-time Analysis
+        </h2>
+        <div class="h-64">
+            <canvas id="fraudChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Recent Transactions -->
+    <div class="card p-6 rounded-lg col-span-1 lg:col-span-2">
+        <h2 class="text-2xl font-bold mb-4 text-red-600">
+            <i class="fas fa-history mr-2"></i>Recent Transactions
+        </h2>
+        <div class="overflow-x-auto">
+            <table class="min-w-full">
+                <thead>
+                    <tr class="text-left">
+                        <th class="py-2">Time</th>
+                        <th class="py-2">Amount</th>
+                        <th class="py-2">Type</th>
+                        <th class="py-2">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="transactions-table">
+                    <!-- Transactions will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Risk Score Card -->
+    <div class="card p-6 rounded-lg col-span-1">
+        <h2 class="text-2xl font-bold mb-4 text-red-600">
+            <i class="fas fa-shield-alt mr-2"></i>Risk Analysis
+        </h2>
+        <div class="text-center py-4">
+            <div class="inline-block relative">
+                <canvas id="riskGauge" width="200" height="200"></canvas>
+                <div id="risk-score" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-2xl font-bold">
+                    0%
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Charts
+    const fraudCtx = document.getElementById('fraudChart').getContext('2d');
+    const fraudChart = new Chart(fraudCtx, {
+        type: 'line',
+        data: {
+            labels: Array.from({length: 10}, (_, i) => `${i}m ago`),
+            datasets: [{
+                label: 'Fraud Risk Score',
+                data: Array.from({length: 10}, () => Math.random() * 100),
+                borderColor: '#FF0000',
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+
+    // Risk Gauge
+    const gaugeCtx = document.getElementById('riskGauge').getContext('2d');
+    const riskGauge = new Chart(gaugeCtx, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [65, 35],
+                backgroundColor: ['#FF0000', '#333333'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            cutout: '80%',
+            rotation: -90,
+            circumference: 180,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+
+    // Handle form submission
+    document.getElementById('transaction-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Simulate analysis
+        const amount = document.getElementById('amount').value;
+        const cardNumber = document.getElementById('card_number').value;
+        const type = document.getElementById('type').value;
+
+        // Add to transactions table
+        const tbody = document.getElementById('transactions-table');
+        const row = tbody.insertRow(0);
+        row.innerHTML = `
+            <td class="py-2">${new Date().toLocaleTimeString()}</td>
+            <td class="py-2">$${amount}</td>
+            <td class="py-2">${type}</td>
+            <td class="py-2"><span class="text-green-500">Safe</span></td>
+        `;
+
+        // Update charts (simulated)
+        const newScore = Math.random() * 100;
+        document.getElementById('risk-score').textContent = `${Math.round(newScore)}%`;
+        
+        // Update risk gauge
+        riskGauge.data.datasets[0].data = [newScore, 100 - newScore];
+        riskGauge.update();
+
+        // Update fraud chart
+        fraudChart.data.datasets[0].data.shift();
+        fraudChart.data.datasets[0].data.push(newScore);
+        fraudChart.update();
+    });
+});
+</script>
+{% endblock %}
