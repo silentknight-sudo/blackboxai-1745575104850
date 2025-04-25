@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+
+{% block title %}The Plan Room - La Casa de Fraud Detection{% endblock %}
+
+{% block content %}
+<!-- Analysis Header -->
+<div class="mb-8">
+    <h1 class="text-4xl font-bold text-red-600 mb-4">The Plan Room</h1>
+    <p class="text-gray-400">Deep dive into transaction patterns and fraud analytics</p>
+</div>
+
+<!-- Analysis Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- ML Model Performance -->
+    <div class="card p-6 rounded-lg">
+        <h2 class="text-2xl font-bold mb-4 text-red-600">
+            <i class="fas fa-brain mr-2"></i>Model Performance
+        </h2>
+        <div class="h-64 mb-4">
+            <canvas id="modelPerformanceChart"></canvas>
+        </div>
+        <div class="grid grid-cols-2 gap-4 mt-4">
+            <div class="text-center p-3 bg-gray-800 rounded">
+                <div class="text-xl font-bold text-red-600">99.8%</div>
+                <div class="text-sm text-gray-400">Accuracy</div>
+            </div>
+            <div class="text-center p-3 bg-gray-800 rounded">
+                <div class="text-xl font-bold text-red-600">0.2%</div>
+                <div class="text-sm text-gray-400">False Positives</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transaction Distribution -->
+    <div class="card p-6 rounded-lg">
+        <h2 class="text-2xl font-bold mb-4 text-red-600">
+            <i class="fas fa-chart-pie mr-2"></i>Transaction Types
+        </h2>
+        <div class="h-64">
+            <canvas id="transactionDistributionChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Fraud Patterns -->
+    <div class="card p-6 rounded-lg">
+        <h2 class="text-2xl font-bold mb-4 text-red-600">
+            <i class="fas fa-exclamation-triangle mr-2"></i>Fraud Patterns
+        </h2>
+        <div class="space-y-4">
+            <div class="bg-gray-800 p-4 rounded">
+                <div class="flex justify-between items-center mb-2">
+                    <span>Unusual Time</span>
+                    <span class="text-red-600">32%</span>
+                </div>
+                <div class="w-full bg-gray-700 rounded-full h-2">
+                    <div class="bg-red-600 h-2 rounded-full" style="width: 32%"></div>
+                </div>
+            </div>
+            <div class="bg-gray-800 p-4 rounded">
+                <div class="flex justify-between items-center mb-2">
+                    <span>Large Amount</span>
+                    <span class="text-red-600">28%</span>
+                </div>
+                <div class="w-full bg-gray-700 rounded-full h-2">
+                    <div class="bg-red-600 h-2 rounded-full" style="width: 28%"></div>
+                </div>
+            </div>
+            <div class="bg-gray-800 p-4 rounded">
+                <div class="flex justify-between items-center mb-2">
+                    <span>Multiple Locations</span>
+                    <span class="text-red-600">24%</span>
+                </div>
+                <div class="w-full bg-gray-700 rounded-full h-2">
+                    <div class="bg-red-600 h-2 rounded-full" style="width: 24%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Geographic Distribution -->
+    <div class="card p-6 rounded-lg">
+        <h2 class="text-2xl font-bold mb-4 text-red-600">
+            <i class="fas fa-globe mr-2"></i>Geographic Analysis
+        </h2>
+        <div class="h-64">
+            <canvas id="geoDistributionChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Detailed Stats Table -->
+<div class="card p-6 rounded-lg mt-6">
+    <h2 class="text-2xl font-bold mb-4 text-red-600">
+        <i class="fas fa-table mr-2"></i>Detailed Statistics
+    </h2>
+    <div class="overflow-x-auto">
+        <table class="min-w-full">
+            <thead>
+                <tr class="text-left border-b border-gray-700">
+                    <th class="py-3">Metric</th>
+                    <th class="py-3">Last 24h</th>
+                    <th class="py-3">Last Week</th>
+                    <th class="py-3">Last Month</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-b border-gray-700">
+                    <td class="py-3">Total Transactions</td>
+                    <td>1,234</td>
+                    <td>8,765</td>
+                    <td>34,567</td>
+                </tr>
+                <tr class="border-b border-gray-700">
+                    <td class="py-3">Fraud Detected</td>
+                    <td class="text-red-600">12</td>
+                    <td class="text-red-600">87</td>
+                    <td class="text-red-600">345</td>
+                </tr>
+                <tr class="border-b border-gray-700">
+                    <td class="py-3">Average Amount</td>
+                    <td>$156.78</td>
+                    <td>$142.32</td>
+                    <td>$138.45</td>
+                </tr>
+                <tr>
+                    <td class="py-3">Response Time</td>
+                    <td>0.001s</td>
+                    <td>0.001s</td>
+                    <td>0.001s</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Model Performance Chart
+    const perfCtx = document.getElementById('modelPerformanceChart').getContext('2d');
+    new Chart(perfCtx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                label: 'Accuracy',
+                data: [99.2, 99.4, 99.5, 99.6, 99.7, 99.8],
+                borderColor: '#FF0000',
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: false,
+                    min: 98,
+                    max: 100
+                }
+            }
+        }
+    });
+
+    // Transaction Distribution Chart
+    const distCtx = document.getElementById('transactionDistributionChart').getContext('2d');
+    new Chart(distCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Online', 'POS', 'ATM', 'Transfer'],
+            datasets: [{
+                data: [45, 30, 15, 10],
+                backgroundColor: ['#FF0000', '#CC0000', '#990000', '#660000']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    // Geographic Distribution Chart
+    const geoCtx = document.getElementById('geoDistributionChart').getContext('2d');
+    new Chart(geoCtx, {
+        type: 'bar',
+        data: {
+            labels: ['NA', 'EU', 'ASIA', 'SA', 'AF', 'OC'],
+            datasets: [{
+                label: 'Fraud Cases',
+                data: [65, 59, 80, 81, 56, 55],
+                backgroundColor: '#FF0000'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+});
+</script>
+{% endblock %}
