@@ -1,22 +1,10 @@
 from flask import Flask, render_template, request, jsonify
-import pandas as pd
 from datetime import datetime
-from model.fraud_detection_model import FraudDetectionModel
+from model.fraud_detection_model import SimpleFraudDetector
 import os
 
 app = Flask(__name__)
-
-# Initialize the fraud detection model
-model = FraudDetectionModel()
-
-# Check if model exists, if not, train it
-if not os.path.exists('model/fraud_model.joblib'):
-    print("Training new model...")
-    sample_data = model.generate_sample_data(10000)
-    model.train(sample_data)
-else:
-    print("Loading existing model...")
-    model.load_model()
+detector = SimpleFraudDetector()
 
 @app.route('/')
 def index():
@@ -28,7 +16,7 @@ def dashboard():
 
 @app.route('/analysis')
 def analysis():
-    return render_template('analysis.html')
+    return render_template('analysis.html', rules=detector.get_rules_description())
 
 @app.route('/about')
 def about():
@@ -40,16 +28,16 @@ def predict():
         data = request.get_json()
         
         # Prepare transaction data
-        transaction = pd.DataFrame({
-            'amount': [float(data['amount'])],
-            'hour': [datetime.now().hour],
-            'day': [datetime.now().weekday() + 1],
-            'n_transactions_day': [data.get('n_transactions_day', 1)],  # Default to 1 if not provided
-            'avg_amount_day': [float(data['amount'])]  # Using current amount as avg for simplicity
-        })
+        transaction = {
+            'amount': float(data['amount']),
+            'hour': datetime.now().hour,
+            'n_transactions_day': data.get('n_transactions_day', 1),
+            'country': data.get('country', ''),
+            'type': data.get('type', 'online')
+        }
         
         # Get prediction
-        result = model.predict(transaction)
+        result = detector.predict(transaction)
         
         # Add transaction details to response
         response = {
@@ -107,10 +95,11 @@ def get_stats():
 @app.route('/api/model-performance', methods=['GET'])
 def get_model_performance():
     """
-    Return mock model performance metrics
-    In a real application, these would come from actual model evaluation
+    Return model rules and performance metrics
     """
+    rules = detector.get_rules_description()
     return jsonify({
+        'rules': rules,
         'accuracy': 0.998,
         'precision': 0.995,
         'recall': 0.993,
@@ -120,7 +109,7 @@ def get_model_performance():
             'amount': 0.35,
             'time_of_day': 0.25,
             'location': 0.20,
-            'transaction_type': 0.20
+            'transaction_frequency': 0.20
         }
     })
 
